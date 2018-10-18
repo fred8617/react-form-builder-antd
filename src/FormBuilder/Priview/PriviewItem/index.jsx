@@ -120,14 +120,13 @@ const RadioGroup = Radio.Group;
 	}),
 )
 export default class PriviewItem extends Component{
+
   getFormItem=(item,props)=>{//根据元素类型获取控件
     const {type}=item;
     if(type===`input`){
       return <Input {...props}/>
     }else if(type===`inputNumber`){
       return <InputNumber {...props}/>
-    }else if(type===`radio`){
-      return <Input {...props}/>
     }else if(type===`checkbox`){
       return <Checkbox {...props}/>
     }else if(type===`checkboxGroup`){
@@ -151,23 +150,25 @@ export default class PriviewItem extends Component{
 				</CheckboxGroup>
 			)
     }else if(type===`radio`){
-			<RadioGroup {...props} style={{width:`100%`,lineHeight:`32px`,position:`relative`,top:5}}>
-							<Row>
-								{
-									item.options.map(e=>(
-										<Col
-											title={e.label}
-											span={24/item.optionRowShow}
-											style={{whiteSpace:`nowrap`,textOverflow:`ellipsis`,overflow:`hidden`}}
-											>
-											<Radio value={e.value}>
-												{e.label}
-											</Radio>
-										</Col>
-									))
-								}
-							</Row>
-			</RadioGroup>
+			return (
+				<RadioGroup {...props} style={{width:`100%`,lineHeight:`32px`,position:`relative`,top:5}}>
+								<Row>
+									{
+										item.options.map(e=>(
+											<Col
+												title={e.label}
+												span={24/item.optionRowShow}
+												style={{whiteSpace:`nowrap`,textOverflow:`ellipsis`,overflow:`hidden`}}
+												>
+												<Radio value={e.value}>
+													{e.label}
+												</Radio>
+											</Col>
+										))
+									}
+								</Row>
+				</RadioGroup>
+			)
 		}
   }
   render(){

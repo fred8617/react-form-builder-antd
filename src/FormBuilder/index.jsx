@@ -155,7 +155,10 @@ export default class FormBuilder extends Component{
 
 
   checkType=(item)=>{
-    if(item.type==`checkboxGroup`){
+    const {
+      type,
+    }=item;
+    if(type==`checkboxGroup`||type==`radio`){
       item.options=[
         {label: 'default1', value: 'default1Value'},
         {label: 'default2', value: 'default2Value'}

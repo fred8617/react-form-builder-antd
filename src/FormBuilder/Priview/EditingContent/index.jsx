@@ -158,7 +158,7 @@ export default class EditingContent extends Component{
           }
         }}
         {do{
-          if(type==`checkboxGroup`){
+          if(type==`checkboxGroup`||type==`radio`){
             <Fragment>
               <Divider orientation="left">Options</Divider>
               {
