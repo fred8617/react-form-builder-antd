@@ -1,0 +1,22 @@
+{
+  "presets": [
+      "react-app"
+    ],
+    "plugins": [
+	     "styled-components",
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "css"
+        }
+      ],
+      [
+        "transform-decorators-legacy"
+      ],
+      [
+        "transform-do-expressions"
+      ]
+    ]
+}
