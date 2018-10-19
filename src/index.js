@@ -1,4 +1,4 @@
-import FormBuilder from './FormBuilder';
+import FormBuilder from 'react-form-builder-antd';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

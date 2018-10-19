@@ -12,7 +12,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const myDirPath=path.resolve(__dirname,"../src/App");
-const srcPath = path.resolve(__dirname, "../src");
+const srcPath = path.resolve(__dirname, "../src/component");
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -95,6 +95,7 @@ module.exports = {
       'mock':`${myDirPath}/mock`,
       'mockd':`${myDirPath}/mock/data`,
       '@':srcPath,
+      'react-form-builder-antd':`${srcPath}/main.js`,
 
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/

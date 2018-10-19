@@ -65,6 +65,7 @@
     "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.4.1",
     "react-draft-wysiwyg": "^1.12.13",
+    "react-form-builder-antd": "^0.0.1",
     "react-free-scrollbar": "^0.3.2",
     "react-intl": "^2.4.0",
     "react-lz-editor": "^0.12.1",

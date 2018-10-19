@@ -1,0 +1,29 @@
+{
+  "presets": [
+    "env",
+    "react"
+  ],
+  "plugins": [
+    "styled-components",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
+    ],
+    [
+      "transform-decorators-legacy"
+    ],
+    [
+      "transform-do-expressions"
+    ],
+    [
+      "transform-class-properties"
+    ],
+    [
+      "transform-object-rest-spread"
+    ]
+  ]
+}
