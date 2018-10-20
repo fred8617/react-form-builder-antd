@@ -2,27 +2,37 @@ import React,{Component,Fragment} from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import update from 'immutability-helper';
-import {Form} from 'antd';
+import {
+  Form,
+  Row,
+  Col,
+  Affix,
+} from 'antd';
 //组件
 import {Provider} from '@/Context';
 import Priview from './Priview';//预览
 import ElementList from './ElementList';//元素列表
 import styled from 'styled-components';
 import EditingContent from './EditingContent';//编辑抽屉
+import DeveloperContent from './DeveloperContent';//开发者视图
 
 
 
 const PrivicwContainer=styled.div`
-  float: left;
-  @media screen and (max-width: 1900px) {
+  padding: 10px;
+  border:1px solid #d3d3d3;
+  box-shadow: -3px -1px 20px 2px #d3d3d3;
+  border-radius: 5px;
+  min-height: 200px;
+  ${'' /* @media screen and (max-width: 1900px) {
     width: 600px;
   }
   @media screen and (max-width: 1024px) {
     width: 500px;
-  }
+  } */}
 `;
 const ElementListContainer=styled.div`
-  float: left;
+  ${'' /* margin-left: 5px; */}
 `;
 
 @DragDropContext(HTML5Backend,{window })
@@ -35,6 +45,7 @@ export default class FormBuilder extends Component{
 
   state={
     data:[],
+    url:null,//提交的url
     editing:false,
     editingData:{label:``},
     editingIndex:null,
@@ -105,11 +116,15 @@ export default class FormBuilder extends Component{
   }
   componentWillMount(){
     const {
-      data,
+      data:{
+        data,
+        url,
+      },
       design=true,
+      developer=false,
     }=this.props;
     if(data){
-      this.setState({data,design})
+      this.setState({data,design,developer,url})
     }
   }
   deleteItem=(item)=>{
@@ -283,16 +298,22 @@ export default class FormBuilder extends Component{
     newState.editingData=newState.data[index];
     this.setState(newState)
   }
-
   render(){
     console.log(`FormBuilder render`);
     const {
       props:{
-        form
+        form,
       },
+      state:{
+        developer,
+      }
     }=this;
     return (
-      <Provider value={{state:this.state,form,setState:this.setState.bind(this)}}>
+      <Provider value={{
+        state:this.state,
+        form,
+        setState:this.setState.bind(this)
+      }}>
         <style>
         {
           `
@@ -302,13 +323,36 @@ export default class FormBuilder extends Component{
           `
         }
         </style>
-        <EditingContent/>
-        <PrivicwContainer>
-          <Priview/>
-        </PrivicwContainer>
-        <ElementListContainer>
-          <ElementList/>
-        </ElementListContainer>
+        <Fragment>
+          <Row
+            style={{
+              width:800,
+              margin:`auto`
+            }}
+            gutter={8}
+          >
+            <Col span={20}>
+              <PrivicwContainer>
+                {do{
+                  if(developer){
+                    <Affix>
+                      <DeveloperContent/>
+                    </Affix>
+                  }
+                }}
+                <Priview/>
+              </PrivicwContainer>
+            </Col>
+            <Col span={4}>
+              <Affix>
+                <ElementListContainer>
+                  <ElementList/>
+                </ElementListContainer>
+              </Affix>
+            </Col>
+          </Row>
+          <EditingContent/>
+        </Fragment>
       </Provider>
     )
   }

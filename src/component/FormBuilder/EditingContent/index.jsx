@@ -158,19 +158,19 @@ export default class EditingContent extends Component{
         visible={visible}
         placement={position}
       >
-        <Divider orientation="left">FieldName</Divider>
+        <Divider orientation="left">传值字段</Divider>
           <Input
             value={fieldName}
             onChange={this.fieldNameChange}
-            placeHolder={`输入传入后台字段名称`}
+            placeholder={`输入传入后台字段名称`}
             style={{width:200}}
           />
-        <Divider orientation="left">Label</Divider>
+        <Divider orientation="left">显示字段名</Divider>
           <LabelEditor/>
-        <Divider orientation="left">Required</Divider>
+        <Divider orientation="left">是否必填</Divider>
         <SpanLH32>
           <Checkbox checked={required} onChange={this.requireChange}>
-            required
+            必填
           </Checkbox>
         </SpanLH32>
         {do{
@@ -178,7 +178,7 @@ export default class EditingContent extends Component{
               <Input
                 value={requiredMessage}
                 onChange={this.requiredMessageChange}
-                placeHolder={`输入校验required的标语`}
+                placeHolder={`输入校验必填的标语`}
                 style={{width:200}}
               />
           }
@@ -186,7 +186,7 @@ export default class EditingContent extends Component{
         {do{
           if(type==`checkboxGroup`||type==`radio`||type==`select`){
             <Fragment>
-              <Divider orientation="left">Options</Divider>
+              <Divider orientation="left">选项</Divider>
               {
                 options.map((e,i)=>{
                   return (
@@ -228,7 +228,7 @@ export default class EditingContent extends Component{
               {do{
                 if(type==`checkboxGroup`||type==`radio`){
                   <Fragment>
-                    <Divider orientation="left">OptionsRowShow</Divider>
+                    <Divider orientation="left">每行展示数量</Divider>
                     <Slider min={1} max={4}  onChange={this.optionRowShowChange} value={Number(optionRowShow)} />
                   </Fragment>
                 }

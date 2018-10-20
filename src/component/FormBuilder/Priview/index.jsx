@@ -19,8 +19,24 @@ import {
   Drawer,
 } from 'antd';
 import update from 'immutability-helper';
-import {CursorIcon} from '@/styled';
+import {
+	CursorIcon
+} from '@/styled';
+import styled from 'styled-components';
 import PriviewItem from './PriviewItem';//预览单个元素
+
+const NoneElement=styled.div`
+	height:100px;
+	text-align: center;
+	border: 3px dashed #d3d3d3;
+	color:#d3d3d3;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	font-size: 20px;
+	border-radius: 5px;
+	line-height: 100px;
+`
 
 
 
@@ -100,11 +116,14 @@ export default class Priview extends Component{
           <Form>
             {do{
               if(length==0){
-                <div>抓点来</div>
+                <NoneElement>
+									抓点来
+								</NoneElement>
               }else{
                 data.map((e,i)=>{
                   return (
                     <PriviewItem
+											key={i}
                       design={design}
                       form={form}
                       item={e}

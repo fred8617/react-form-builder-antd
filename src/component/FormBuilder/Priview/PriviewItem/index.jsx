@@ -221,8 +221,8 @@ export default class PriviewItem extends Component{
 			display:`inline-block`,
     }
     const formItemLayout = {
-      labelCol: { span: 10 },
-      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+      wrapperCol: { span: 16 },
     };
     return (
       connectDragSource &&

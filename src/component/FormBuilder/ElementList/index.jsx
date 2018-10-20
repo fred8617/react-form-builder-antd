@@ -14,8 +14,10 @@ export default class ElementList extends Component{
     }=this.props;
     return (
       <List
-        header={<div style={{width:100}}>item</div>}
-        locale={{'emptyText':`抓点数据来`}}
+        header={
+          <div>
+            元素
+          </div>}
         bordered
         dataSource={data}
         renderItem={
