@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
-import {FormConsume} from '@/Context';
-
+import {FormConsume} from '../../Context';
+import {
+	CursorIcon
+} from '../../styled';
 import {
 	DragSource,
 	DropTarget,
@@ -19,9 +21,7 @@ import {
   Drawer,
 } from 'antd';
 import update from 'immutability-helper';
-import {
-	CursorIcon
-} from '@/styled';
+
 import styled from 'styled-components';
 import PriviewItem from './PriviewItem';//预览单个元素
 

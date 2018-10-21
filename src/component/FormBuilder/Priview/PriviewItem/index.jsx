@@ -20,8 +20,8 @@ import {
 	Checkbox,
 	Radio,
 } from 'antd';
-import {FormConsume} from '@/Context';
-import {CursorIcon} from '@/styled';
+import {FormConsume} from '../../../Context';
+import {CursorIcon} from '../../../styled';
 import update from 'immutability-helper';
 const PRIVIEW_ELEMENT=`PRIVIEW_ELEMENT`;
 
@@ -144,8 +144,9 @@ export default class PriviewItem extends Component{
 				<CheckboxGroup  {...props} style={{width:`100%`,lineHeight:`32px`,position:`relative`,top:5}}>
 					<Row>
 						{
-							item.options.map(e=>(
+							item.options.map((e,i)=>(
 								<Col
+									key={i}
 									title={e.label}
 									span={24/item.optionRowShow}
 									style={{whiteSpace:`nowrap`,textOverflow:`ellipsis`,overflow:`hidden`}}
@@ -164,8 +165,9 @@ export default class PriviewItem extends Component{
 				<RadioGroup {...props} style={{width:`100%`,lineHeight:`32px`,position:`relative`,top:5}}>
 								<Row>
 									{
-										item.options.map(e=>(
+										item.options.map((e,i)=>(
 											<Col
+												key={i}
 												title={e.label}
 												span={24/item.optionRowShow}
 												style={{whiteSpace:`nowrap`,textOverflow:`ellipsis`,overflow:`hidden`}}
@@ -184,8 +186,10 @@ export default class PriviewItem extends Component{
 				<Select
 					style={{ width: 120 }}>
 					{
-						item.options.map(e=>(
-							<Option value={e.value}>
+						item.options.map((e,i)=>(
+							<Option
+								key={i}
+								value={e.value}>
 								{e.label}
 							</Option>
 						))

@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {List} from 'antd';
 import Element from './Element';
-import {FormConsume} from '@/Context';
+import {FormConsume} from '../../Context';
 
 @FormConsume
 export default class ElementList extends Component{

@@ -17,8 +17,8 @@ import { EditorState, convertToRaw, ContentState,convertFromHTML } from 'draft-j
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import update from 'immutability-helper';
-import {SpanLH32,RowMB10} from '@/styled';
-import {FormConsume} from '@/Context';
+import {SpanLH32,RowMB10} from '../../styled';
+import {FormConsume} from '../../Context';
 import LabelEditor from './LabelEditor';//编辑label
 
 const RadioButton = Radio.Button;

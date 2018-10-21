@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {List} from 'antd';
-import {FormConsume} from '@/Context';
+import {FormConsume} from '../../../Context';
 import {
 	DragSource,
 } from 'react-dnd';

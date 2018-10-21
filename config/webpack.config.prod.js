@@ -97,6 +97,8 @@ module.exports = {
   	  'module':`${myDirPath}/module`,
   	  'static':`${myDirPath}/static`,
   	  'store':`${myDirPath}/store`,
+      'mock':`${myDirPath}/mock`,
+      'mockd':`${myDirPath}/mock/data`,
       '@':srcPath,
       'react-form-builder-antd':`${srcPath}/main.js`,
       // Support React Native Web

@@ -1,4 +1,4 @@
-import FormBuilder from 'react-form-builder-antd';
+import FormBuilder from '@/main';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';

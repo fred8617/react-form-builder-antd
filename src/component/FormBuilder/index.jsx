@@ -9,7 +9,7 @@ import {
   Affix,
 } from 'antd';
 //组件
-import {Provider} from '@/Context';
+import {Provider} from '../Context';
 import Priview from './Priview';//预览
 import ElementList from './ElementList';//元素列表
 import styled from 'styled-components';

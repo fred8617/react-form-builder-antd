@@ -12,7 +12,7 @@ import { EditorState, convertToRaw, ContentState,convertFromHTML } from 'draft-j
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import update from 'immutability-helper';
-import {FormConsume} from '@/Context';
+import {FormConsume} from '../../../Context';
 @FormConsume
 export default class LabelEditor extends Component{
   state={
