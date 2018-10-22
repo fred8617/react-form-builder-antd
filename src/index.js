@@ -2,6 +2,7 @@ import FormBuilder from '@/main';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import DevTools from 'mobx-react-devtools';
 
 const Container=styled.div`
   ${'' /* position: absolute;//不建议这样使用，元素内部固钉会出问题
@@ -75,15 +76,16 @@ const data={
       ]
     }
   ],
-  "url": "1aaaaaaaaa"
+  "submitUrl": "1aaaaaaaaa"
 }
 
 ReactDOM.render(
   <Container>
     <FormBuilder
       developer={true}
-      design={false}
+      design={true}
       data={data}
     />
+    <DevTools/>
   </Container>
 ,root)

@@ -4,6 +4,11 @@ import {FormConsume} from '../../../Context';
 import {
 	DragSource,
 } from 'react-dnd';
+import {
+  inject,
+  observer,
+} from 'mobx-react';
+import {action} from 'mobx';
 
 const type=`ELEMENT`;
 //拖拽目标处理集合
@@ -16,6 +21,8 @@ const source={
 	}
 }
 
+@inject('store')
+@observer
 @FormConsume
 @DragSource(
 	type,
@@ -27,23 +34,25 @@ const source={
 	}),
 )
 export default class Element extends Component{
+
   render(){
     const {
-      state:{
-				actions:{
-					addElement
-				}
-			},
       connectDragSource,
-      item,
-      item:{
+			item,
+			item:{
         name,
-      }
+      },
+			store:{
+				addElement
+			}
     }=this.props;
     return (
       connectDragSource &&
       connectDragSource(
-        <div onClick={e=>addElement(item)}>
+        <div
+					onClick={e=>addElement(item)}
+					style={{cursor:`pointer`}}
+					>
           {name}
         </div>
       )

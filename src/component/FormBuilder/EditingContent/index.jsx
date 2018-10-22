@@ -20,11 +20,17 @@ import update from 'immutability-helper';
 import {SpanLH32,RowMB10} from '../../styled';
 import {FormConsume} from '../../Context';
 import LabelEditor from './LabelEditor';//编辑label
+import FieldNameInput from './FieldNameInput';//编辑fieldName
+import RequiredCheckBox from './RequiredCheckBox';//必填复选框
+import DataOptions from './DataOptions';//特殊元素选项
+import OptionRowShow from './OptionRowShow';//特殊元素选项
+import {inject,observer} from 'mobx-react';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
-@FormConsume
+@inject('store')
+@observer
 export default class EditingContent extends Component{
   state={
     position:`right`,
@@ -33,109 +39,34 @@ export default class EditingContent extends Component{
     this.setState({position:e.target.value})
   }
 
-
-  requireChange=(e)=>{//必须改变
-    const {checked}=e.target;
-    const {
-      props:{
-        state:{
-          editingData:data,
-          actions:{
-            setEditingData
-          }
-        },
-      },
-    }=this;
-    setEditingData(data,0,`required`,checked);
-  }
-
-  optionRowShowChange=(e)=>{
-    const {
-      props:{
-        state:{
-          editingData:data,
-          actions:{
-            setEditingData
-          }
-        },
-      },
-    }=this;
-    setEditingData(data,0,`optionRowShow`,e);
-  }
-
   onClose=()=>{
     const {
       props:{
-        setState,
+        store,
       }
     }=this;
-    setState({editing:false})
+    store.editing=false;
   }
 
-  fieldNameChange=(e)=>{//必须改变
-    let {value}=e.target;
-    const {
-      props:{
-        form,
-        state:{
-          editingData:data,
-          actions:{
-            setEditingData
-          }
-        },
-      },
-    }=this;
-    setEditingData(data,0,`fieldName`,value);
-  }
-  requiredMessageChange=(e)=>{//必须校验信息改变
-    const {value}=e.target;
-    const {
-      props:{
-        form,
-        state:{
-          editingData:data,
-          actions:{
-            setEditingData
-          }
-        },
-      },
-    }=this;
-    setEditingData(data,0,`requiredMessage`,value);
-    const fName=data.fieldName||`invalidField`;
-    if(!form.getFieldValue(fName)){
-      form.setFieldsValue({[fName]:1})
-      form.setFieldsValue({[fName]:``});
-      setTimeout(()=>{
-        form.validateFields();
-      },1)
-    }
-  }
   render(){
     console.log(`EditingContent render`);
     const {
       props:{
-        state:{
+        form,
+        store:{
           editing:visible,
-          editingData:data,
           editingData:{
-            required,
             type,
-            options,
-            requiredMessage,
-            fieldName,
-            optionRowShow,
           },
-          actions:{
-            setGroupData,
-            addGroupData,
-            deleteGroupData,
-          }
         },
       },
       state:{
         position,
       },
       positionChange,
+      setGroupData,
+      addGroupData,
+      deleteGroupData,
     }=this;
     return (
       <Drawer
@@ -159,77 +90,24 @@ export default class EditingContent extends Component{
         placement={position}
       >
         <Divider orientation="left">传值字段</Divider>
-          <Input
-            value={fieldName}
-            onChange={this.fieldNameChange}
-            placeholder={`输入传入后台字段名称`}
-            style={{width:200}}
+          <FieldNameInput
           />
         <Divider orientation="left">显示字段名</Divider>
           <LabelEditor/>
         <Divider orientation="left">是否必填</Divider>
         <SpanLH32>
-          <Checkbox checked={required} onChange={this.requireChange}>
-            必填
-          </Checkbox>
+          <RequiredCheckBox form={form}/>
         </SpanLH32>
-        {do{
-          if(required){
-              <Input
-                value={requiredMessage}
-                onChange={this.requiredMessageChange}
-                placeHolder={`输入校验必填的标语`}
-                style={{width:200}}
-              />
-          }
-        }}
         {do{
           if(type==`checkboxGroup`||type==`radio`||type==`select`){
             <Fragment>
               <Divider orientation="left">选项</Divider>
-              {
-                options.map((e,i)=>{
-                  return (
-                    <RowMB10 gutter={15}>
-                      <Col span={10}>
-                        <Input
-                          onChange={e=>setGroupData(data,`options`,i,`label`,e.target.value)}
-                          value={e.label}
-                          placeHolder="label"
-                        />
-                      </Col>
-                      <Col span={10}>
-                        <Input
-                          onChange={e=>setGroupData(data,`options`,i,`value`,e.target.value)}
-                          value={e.value}
-                          placeHolder="value"
-                        />
-                      </Col>
-                      <Col span={2}>
-                        <Button
-                          icon="plus"
-                          onClick={e=>addGroupData(data,`options`,i,{label:`default`,value:`default`})}
-                        />
-                      </Col>
-                      <Col span={2}>
-                        {do{
-                          if(options&&options.length>1){
-                            <Button
-                              icon="minus"
-                              onClick={e=>deleteGroupData(data,`options`,i)}
-                            />
-                          }
-                        }}
-                      </Col>
-                    </RowMB10>
-                  )
-                })
-              }
+              <DataOptions />
               {do{
                 if(type==`checkboxGroup`||type==`radio`){
                   <Fragment>
                     <Divider orientation="left">每行展示数量</Divider>
-                    <Slider min={1} max={4}  onChange={this.optionRowShowChange} value={Number(optionRowShow)} />
+                    <OptionRowShow/>
                   </Fragment>
                 }
               }}

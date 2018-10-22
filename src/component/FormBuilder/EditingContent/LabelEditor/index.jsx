@@ -13,10 +13,15 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import update from 'immutability-helper';
 import {FormConsume} from '../../../Context';
-@FormConsume
+
+import {observer,inject} from 'mobx-react';
+import {observable,action} from 'mobx';
+
+@inject('store')
+@observer
 export default class LabelEditor extends Component{
+
   state={
-    editorState:EditorState.createEmpty(),
     toolbar:[
       'inline',
       'blockType',
@@ -33,65 +38,36 @@ export default class LabelEditor extends Component{
       'history'
     ],
   }
-  setEditState=(data)=>{
-    let editorState;
-    const newContent=convertFromHTML(data.label);
-    if (!newContent.contentBlocks) {
-      editorState = EditorState.createEmpty();
-    }else{
-      const contentState = ContentState.createFromBlockArray(newContent);
-      editorState=EditorState.createWithContent(contentState);
-    }
-    const newState=update(this.state,{
-      editorState:{
-        $set:editorState
-      }
-    })
-    this.setState(newState)
-  }
-  componentDidMount(){
-    this.setEditState(this.props.state.editingData);
-  }
-  componentWillReceiveProps(nextProps){
-    console.log(`EditingContent receive`);
+
+  @action onEditorStateChange=(editorState)=>{
     const {
-      state:{
+      store,
+      store:{
         editingData:data,
-      }
-    }=nextProps;
-    const {editingData}=this.props.state
-    if(editingData.fieldName&&data.fieldName==editingData.fieldName){
-      return;
-    }
-    this.setEditState(data);
-  }
-  onEditorStateChange=(editorState)=>{
-    const {
-      state:{
-        editingData:data,
-        actions:{
-          setEditingData
-        }
+        setEditingData
       }
     }=this.props;
     const label=draftToHtml(convertToRaw(editorState.getCurrentContent()))
-    setEditingData(data,0,`label`,label);
-    this.setState({
-      editorState,
-    });
+    setEditingData(`label`,label);
+    store.editorState=editorState;
   }
   render(){
     const {
       state:{
         toolbar
       },
+      props:{
+        store:{
+          editorState
+        }
+      }
     }=this;
     return (
       <Editor
         toolbar={
           {options:toolbar}
         }
-        editorState={this.state.editorState}
+        editorState={editorState}
         wrapperClassName="editor"
         editorClassName="editor-main"
         onEditorStateChange={this.onEditorStateChange}

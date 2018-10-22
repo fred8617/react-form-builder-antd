@@ -2,15 +2,19 @@ import React,{Component} from 'react';
 import {List} from 'antd';
 import Element from './Element';
 import {FormConsume} from '../../Context';
+import {
+  inject,
+  observer,
+} from 'mobx-react';
 
-@FormConsume
+@inject('store')
+@observer
 export default class ElementList extends Component{
   render(){
     const {
-      state:{
+      store:{
         elementTypes:data
       },
-      addElement,
     }=this.props;
     return (
       <List
@@ -26,7 +30,6 @@ export default class ElementList extends Component{
                   <List.Item>
                     <Element
                       item={item}
-                      addElement={addElement}
                     />
                   </List.Item>
                 )

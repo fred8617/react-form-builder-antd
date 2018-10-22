@@ -1,5 +1,13 @@
 import React,{Component,Fragment} from 'react';
-import {FormConsume} from '../../Context';
+import {
+  FormConsume,
+} from '../../Context';
+import {
+  observer,
+  inject
+} from 'mobx-react';
+
+
 import {
   Collapse,
   Icon,
@@ -7,41 +15,54 @@ import {
   Input,
   Form,
   Button,
+  Modal,
 } from 'antd';
+
+import UrlInput from './UrlInput';
+
 const Search = Input.Search;
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
-@FormConsume
+
+
+
+
+
+@inject('store')
+@observer
 export default class DeveloperContent extends Component{
+
   saveFormDesign=()=>{
     const {
       form:{
         getFieldValue,
       },
-      state:{
-        data
+      store:{
+        data,
+        submitUrl,
       }
     }=this.props;
-    const url=getFieldValue(`testSubmitUrl`);
-    const param={data,url};
-    console.log(JSON.stringify(param,null,2));
+    const param={data,submitUrl};
+    Modal.info({title:`保存表单`,content:<pre>{JSON.stringify(param,null,2)}</pre>})
   }
-  testSubmit=()=>{
-    const {
-      form,
-    }=this.props;
-    console.log(form.getFieldsValue());
-  }
+
+
+  // shouldComponentUpdate(nextProps){
+  //   return (
+  //     (this.props.changField===nextProps.changField)
+  //   );
+  // }
+
   render(){
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 18 },
     };
     const {
-      form:{
-        getFieldProps
-      },
-      state:{url}
+      form,
+      store:{
+        developer,
+      }
     }=this.props;
     console.log(`DeveloperContent render`);
     return (
@@ -51,30 +72,29 @@ export default class DeveloperContent extends Component{
         <Panel
           style={{
             background:`white`,
-            border:`none`
+            border:`none`,
           }}
           showArrow={false}
           header={
             <div>
               <Divider orientation="left">
                 <Icon type="setting"/>
-                开发者选项
+                表单选项
               </Divider>
             </div>
           }
           key="1">
-          <FormItem
-            {...formItemLayout}
-            colon={true}
-            label="提交的url"
-          >
-            <Search
-              placeholder="输入url"
-              enterButton="测试提交"
-              onSearch={this.testSubmit}
-              {...getFieldProps("testSubmitUrl",{initialValue:url})}
-            />
-          </FormItem>
+          {do{
+            if(developer){
+              <FormItem
+                {...formItemLayout}
+                colon={true}
+                label="提交的url"
+              >
+                <UrlInput form={form}/>
+              </FormItem>
+            }
+          }}
           <div  style={{textAlign:`center`}}>
             <Button
               onClick={this.saveFormDesign}
@@ -83,6 +103,7 @@ export default class DeveloperContent extends Component{
               保存表单
             </Button>
           </div>
+          <Divider style={{margin:`10px 0`}}/>
         </Panel>
       </Collapse>
     )

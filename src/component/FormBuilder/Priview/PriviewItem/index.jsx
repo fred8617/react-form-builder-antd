@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {findDOMNode} from 'react-dom';
+import {Map, is} from 'immutable';
 import {
 	DragSource,
 	DropTarget,
@@ -20,6 +21,10 @@ import {
 	Checkbox,
 	Radio,
 } from 'antd';
+import {
+  observer,
+  inject
+} from 'mobx-react';
 import {FormConsume} from '../../../Context';
 import {CursorIcon} from '../../../styled';
 import update from 'immutability-helper';
@@ -42,13 +47,11 @@ const target={
 		const dragItem = monitor.getItem().item;
     const {
 			item:hoverItem,
-			state:{
+			store:{
+				createElement,
+				moveElement,
+				setDownElement,
 				data,
-				actions:{
-					setDownElement,
-					createElement,
-					moveElement,
-				}
 			}
 		}=props;
     setDownElement(monitor.getItem().item)
@@ -110,7 +113,6 @@ const source={
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
-@FormConsume
 @DropTarget(
 	dropType,
 	target,
@@ -130,7 +132,18 @@ const Option = Select.Option;
 	}),
 )
 export default class PriviewItem extends Component{
-
+	shouldComponentUpdate(nextProps){
+		return (
+			(this.props.store.editField===nextProps.item.fieldName)
+			||(this.props.item!==nextProps.item)
+			||(this.props.required!==nextProps.required)
+			||(this.props.label!==nextProps.label)
+			||(this.props.fieldName!==nextProps.fieldName)
+			||(this.props.optionRowShow!==nextProps.optionRowShow)
+			||(JSON.stringify(this.props.options)!=JSON.stringify(nextProps.options))
+			// ||(this.props.item.fieldName!==nextProps.item.fieldName)
+		)
+	}
   getFormItem=(item,props)=>{//根据元素类型获取控件
     const {type}=item;
     if(type===`input`){
@@ -184,7 +197,9 @@ export default class PriviewItem extends Component{
 		}else if(type==`select`){
 			return (
 				<Select
-					style={{ width: 120 }}>
+					style={{ width: 120 }}
+					{...props}
+					>
 					{
 						item.options.map((e,i)=>(
 							<Option
@@ -198,14 +213,17 @@ export default class PriviewItem extends Component{
 			)
 		}
   }
+	edit=()=>{
+		this.props.store.editingShow(this.props.item);
+	}
+	delete=()=>{
+		this.props.store.deleteItem(this.props.item);
+	}
   render(){
     console.log(`PriviewItem render`);
     const {
-			state:{
-				actions:{
-					editShow,
-					deleteItem
-				}
+			store:{
+				design
 			},
       item,
       item:{
@@ -213,12 +231,10 @@ export default class PriviewItem extends Component{
       },
       connectDropTarget,
       connectDragSource,
-      children,
-      design,
-      form:{
-        getFieldDecorator,
-        getFieldProps,
-      },
+			form:{
+				getFieldProps,
+				getFieldDecorator
+			},
     }=this.props;
     const labelStyle={
       cursor:design?`move`:null,
@@ -275,13 +291,13 @@ export default class PriviewItem extends Component{
                     <Col span={2}>
                       <CursorIcon
                         type="edit"
-                        onClick={e=>editShow(item)}
+                        onClick={this.edit}
                       />
                     </Col>
                     <Col span={2}>
                       <CursorIcon
 												type="delete"
-												onClick={e=>deleteItem(item)}
+												onClick={this.delete}
 											/>
                     </Col>
                   </Row>
