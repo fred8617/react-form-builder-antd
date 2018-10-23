@@ -94,7 +94,7 @@ const target={
 	drop(props,monitor,component){
     const tp=monitor.getItemType();
 
-
+		console.log(tp);
     //const dragData=monitor.getItem().data;
 	}
 }
@@ -108,6 +108,9 @@ const source={
 	},
 	beginDrag(props,monitor,component) {
 		return props;
+	},
+	endDrag(props){
+		console.log(props);
 	}
 }
 const CheckboxGroup = Checkbox.Group;
@@ -278,15 +281,16 @@ export default class PriviewItem extends Component{
                 {
                   <Row gutter={5}>
                     <Col span={20}>
-                      {this.getFormItem(item,getFieldProps(item.fieldName||'invalidField',{
-												force:true,
-												rules:[
-													{
-														required:item.required,
-														message:item.requiredMessage
-													},
-												]
-											}))}
+											{
+												getFieldDecorator(item.fieldName||'invalidField',{
+													rules:[
+														{
+															required:item.required,
+															message:item.requiredMessage
+														},
+													]
+												})(this.getFormItem(item,{}))
+										}
                     </Col>
                     <Col span={2}>
                       <CursorIcon

@@ -13,39 +13,22 @@ const Container=styled.div`
 const data={
   "data": [
     {
-      "type": "inputNumber",
-      "name": "数字输入框",
-      "demo": false,
-      "fieldName": "inputNumber0",
-      "label": "inputNumber0"
-    },
-    {
-      "type": "input",
-      "name": "文本输入框",
-      "demo": false,
-      "fieldName": "input1",
-      "label": "input1"
-    },
-    {
-      "type": "input",
-      "name": "文本输入框",
-      "demo": false,
-      "fieldName": "input2",
-      "label": "input2"
-    },
-    {
       "type": "checkbox",
       "name": "复选框",
-      "demo": false,
-      "fieldName": "checkbox3gg",
-      "label": "<p><strong><em><ins>checkbox3ggf</ins></em></strong></p>\n"
+      "fieldName": "checkbox2",
+      "label": "checkbox2",
+      "adding": true,
+      "required": false,
+      "requiredMessage": ""
     },
     {
-      "type": "checkboxGroup",
-      "name": "复选框组",
-      "demo": false,
-      "fieldName": "checkboxGroup4",
-      "label": "checkboxGroup4",
+      "type": "radio",
+      "name": "单选框",
+      "fieldName": "radio3",
+      "label": "radio3",
+      "adding": true,
+      "required": false,
+      "requiredMessage": "",
       "options": [
         {
           "label": "default1",
@@ -59,11 +42,31 @@ const data={
       "optionRowShow": 3
     },
     {
-      "type": "select",
-      "name": "下拉框",
+      "type": "inputNumber",
+      "name": "数字输入框",
+      "fieldName": "inputNumber1",
+      "label": "inputNumber1",
+      "adding": true,
+      "required": false,
+      "requiredMessage": ""
+    },
+    {
+      "type": "input",
+      "name": "文本输入框",
       "demo": false,
-      "fieldName": "select5",
-      "label": "select5",
+      "fieldName": "input0",
+      "label": "input0",
+      "required": false,
+      "requiredMessage": ""
+    },
+    {
+      "type": "radio",
+      "name": "单选框",
+      "fieldName": "radio4",
+      "label": "radio4",
+      "adding": true,
+      "required": false,
+      "requiredMessage": "",
       "options": [
         {
           "label": "default1",
@@ -73,7 +76,9 @@ const data={
           "label": "default2",
           "value": "default2Value"
         }
-      ]
+      ],
+      "optionRowShow": 3,
+      "demo": false
     }
   ],
   "submitUrl": "1aaaaaaaaa"

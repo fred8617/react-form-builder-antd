@@ -26,6 +26,7 @@ export default class RequiredCheckBox extends Component{
       form
     }=this.props;
     store.editingData.requiredMessage=e.target.value;
+    // debugger
     const fName=data.fieldName||`invalidField`;
     if(!form.getFieldValue(fName)){
       form.setFieldsValue({[fName]:1})
@@ -56,7 +57,7 @@ export default class RequiredCheckBox extends Component{
               <Input
                 value={requiredMessage}
                 onChange={this.requiredMessageChange}
-                placeHolder={`输入校验必填的标语`}
+                placeholder={`输入校验必填的标语`}
                 style={{width:200}}
               />
           }

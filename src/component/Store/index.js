@@ -1,4 +1,4 @@
-import {observable,action} from 'mobx';
+import {observable,action,set} from 'mobx';
 import { EditorState, convertToRaw, ContentState,convertFromHTML } from 'draft-js';
 export default class Store {
   editField;
@@ -41,19 +41,19 @@ export default class Store {
     }
   ];
 
-  checkType=(item)=>{//检查元素类型赋予功能
+  @action checkType=(item)=>{//检查元素类型赋予功能
     const {
       type,
     }=item;
-    item.required=false;
-    item.requiredMessage='';
+    set(item,'required',false);
+    set(item,'requiredMessage','');
     if(type==`checkboxGroup`||type==`radio`||type==`select`){
-      item.options=[
+      set(item,'options',[
         {label: 'default1', value: 'default1Value'},
         {label: 'default2', value: 'default2Value'}
-      ]
+      ]);
       if(type==`checkboxGroup`||type==`radio`){
-        item.optionRowShow=3;
+        set(item,'optionRowShow',3);
       }
     }
   }
@@ -67,24 +67,37 @@ export default class Store {
       const index=this.elementTypes.indexOf(element);
       this.elementTypes.splice(index,1);
       this.elementTypes.splice(index,0,newDemo);
+      this.elementTypes=[...this.elementTypes];
     }
   }
+
+  checkName=(str,type,l=0)=>{
+    const exsit=this.data.filter(e=>e.fieldName==str).length>l;
+    if(exsit){
+      this.index++;
+      str=`${type}${this.index}`;
+      str=this.checkName(str,type);
+    }
+    return str;
+  }
+
   @action addElement=(item)=>{//点击添加元素
-    const fl=`${item.type}${this.index}`;
-    const copyItem={...item,fieldName:fl,label:fl,demo:false};
+    const flC=`${item.type}${this.index}`;
+    const fl=this.checkName(flC,item.type);
+    const copyItem=observable({...item,fieldName:fl,label:fl,demo:false});
     this.checkType(copyItem)
 		this.data=[...this.data,copyItem];
     this.index++;
 	}
   @action createElement=(dragItem,hoverIndex)=>{//生成元素
-    const fl=`${dragItem.type}${this.index}`;
-    dragItem.fieldName=fl;
-    dragItem.label=fl;
-    dragItem.adding=true;
+    const flC=`${dragItem.type}${this.index}`;
+    const fl=this.checkName(flC,dragItem.type);
+    set(dragItem,'fieldName',fl);
+    set(dragItem,'label',fl);
     this.checkType(dragItem);
     this.index++;
-    this.data.splice(hoverIndex, 0, dragItem);
-    this.data.splice(hoverIndex, 1);
+    // this.data.splice(hoverIndex, 0, dragItem);
+    // this.data.splice(hoverIndex, 1);
     this.data.splice(hoverIndex, 0, dragItem);
   }
   @action moveElement=( dragIndex, hoverIndex)=>{//移动元素
@@ -136,11 +149,12 @@ export default class Store {
     this.data[i][field].splice(index,1)
   }
 
-  @action init({design,data:{data,submitUrl},developer}){
+  @action init({design,data:{data=[],submitUrl,index=0},developer}){
     this.design=design;
     this.developer=developer;
     this.data=data;
     this.submitUrl=submitUrl;
+    this.index=Number(index);
   }
 
 }

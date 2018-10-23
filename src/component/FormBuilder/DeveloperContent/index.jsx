@@ -40,9 +40,10 @@ export default class DeveloperContent extends Component{
       store:{
         data,
         submitUrl,
+        index,
       }
     }=this.props;
-    const param={data,submitUrl};
+    const param={data,submitUrl,index};
     Modal.info({title:`保存表单`,content:<pre>{JSON.stringify(param,null,2)}</pre>})
   }
 

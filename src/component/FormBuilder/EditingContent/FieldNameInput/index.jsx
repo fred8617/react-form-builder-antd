@@ -14,6 +14,20 @@ export default class FieldNameInput extends Component{
     }=this.props;
     store.editingData.fieldName=e.target.value;
   }
+
+  @action handleBlur=()=>{
+    const {
+      store:{
+        editingData,
+        editingData:{
+          fieldName
+        },
+        checkName,
+      }
+    }=this.props;
+    editingData.fieldName=checkName(fieldName,editingData.type,1);
+  }
+
   render(){
     const {
       store:{
@@ -26,6 +40,7 @@ export default class FieldNameInput extends Component{
       <Input
         value={fieldName}
         onChange={this.handleChange}
+        onBlur={this.handleBlur}
         placeholder={`输入传入后台字段名称`}
         style={{width:200}}
       />
