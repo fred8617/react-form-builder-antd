@@ -6,7 +6,7 @@
     "url": "https://github.com/Fled8617/react-form-builder-antd"
   },
   "main": "./src/dist/main.js",
-  "homepage": "https://github.com/Fled8617/react-form-builder-antd",
+  "homepage": "https://fled8617.github.io/react-form-builder-antd",
   "dependencies": {
     "antd": "^3.7.1",
     "axios": "^0.18.0",
