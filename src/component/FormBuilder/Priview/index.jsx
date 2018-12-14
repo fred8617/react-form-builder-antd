@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
 import {FormConsume} from '../../Context';
 import {
-	CursorIcon
+	CursorIcon,
+	NoneElement,
 } from '../../styled';
 import {
 	DragSource,
@@ -29,18 +30,7 @@ import {toJS} from 'mobx';
 import styled from 'styled-components';
 import PriviewItem from './PriviewItem';//预览单个元素
 
-const NoneElement=styled.div`
-	height:100px;
-	text-align: center;
-	border: 3px dashed #d3d3d3;
-	color:#d3d3d3;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
-	font-size: 20px;
-	border-radius: 5px;
-	line-height: 100px;
-`;
+
 
 
 
@@ -97,9 +87,11 @@ export default class Priview extends Component{
 				}
 			},
 			form,
+			design,
 		}=this.props;
+		console.log(`design`,design);
 		const a=[];
-		options&&options.forEach(e=>a.push(e.label));
+		options?.forEach(e=>a.push(e.label));
     return (
       connectDropTarget&&
       connectDropTarget(
@@ -107,18 +99,26 @@ export default class Priview extends Component{
           <Form>
             {do{
               if(length==0){
-                <NoneElement>
-									抓点来
-								</NoneElement>
+                {
+									design&&
+									(
+										<NoneElement>
+											请在元素栏抓取元素或直接点击元素
+										</NoneElement>
+									)
+								}
               }else{
                 data.map((e,i)=>{
                   return (
                     <PriviewItem
-											key={i}
+											parent={data}
+											design={design}
+											key={`PriviewItem${i}`}
 											form={form}
 											item={e}
 											store={store}
 											required={e.required}
+											children={toJS(e.children)}
 											label={e.label}
 											options={toJS(e.options)}
 											optionRowShow={e.optionRowShow}

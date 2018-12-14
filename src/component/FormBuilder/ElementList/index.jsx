@@ -21,18 +21,19 @@ export default class ElementList extends Component{
         header={
           <div>
             元素
-          </div>}
+          </div>
+        }
         bordered
         dataSource={data}
         renderItem={
           item =>
-                (
-                  <List.Item>
-                    <Element
-                      item={item}
-                    />
-                  </List.Item>
-                )
+          (
+            <List.Item>
+              <Element
+                item={item}
+              />
+            </List.Item>
+          )
         }
       />
     )
