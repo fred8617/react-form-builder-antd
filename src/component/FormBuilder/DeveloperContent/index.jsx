@@ -15,7 +15,6 @@ import {
   Input,
   Form,
   Button,
-  Modal,
 } from 'antd';
 
 import UrlInput from './UrlInput';
@@ -41,10 +40,11 @@ export default class DeveloperContent extends Component{
         data,
         submitUrl,
         index,
-      }
+      },
+      onSave
     }=this.props;
     const param={data,submitUrl,index};
-    Modal.info({title:`保存表单`,content:<pre>{JSON.stringify(param,null,2)}</pre>})
+    onSave?.(param)
   }
 
 

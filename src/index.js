@@ -3,7 +3,7 @@ import React,{Fragment,Component} from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import DevTools from 'mobx-react-devtools';
-import { Radio } from 'antd';
+import { Radio,Modal } from 'antd';
 import {
   observable,
   action,
@@ -15,6 +15,7 @@ const {
   Group,
   Button ,
 }=Radio;
+
 
 
 const data={
@@ -157,6 +158,9 @@ class App extends Component{
     const {value}=e.target;
     this.design=value;
   }
+  onSave=(param)=>{
+    Modal.info({title:`保存表单`,content:<pre>{JSON.stringify(param,null,2)}</pre>});
+  }
   render(){
     return (
       <Fragment>
@@ -185,6 +189,8 @@ class App extends Component{
             elementStyle={{
 
             }}
+            onSave={this.onSave}
+            simple={true}
             developer={true}
             design={this.design}
             data={data}

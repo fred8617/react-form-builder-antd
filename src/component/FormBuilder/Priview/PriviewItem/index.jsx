@@ -33,9 +33,10 @@ import {
 	NoneElement,
 	HoverRow,
 } from '../../../styled';
-import style from './index.less';
+// import style from './index.less';
 import DropableRow from './DropableRow';
 import update from 'immutability-helper';
+import styled from 'styled-components';
 const FormItem = Form.Item;
 const PRIVIEW_ELEMENT=`PRIVIEW_ELEMENT`;
 const dropType=[
@@ -43,6 +44,14 @@ const dropType=[
   PRIVIEW_ELEMENT,
 ];
 const dragType=PRIVIEW_ELEMENT;
+
+const ElementContainer=styled.div`
+	float:left;
+`;
+const OperationContainer=styled.div`
+	float:left;
+	line-height: 35px;
+`;
 
 //放置目标处理集合
 const target={
@@ -94,7 +103,6 @@ const target={
 			createElement(dragItem,hoverIndex);
 			return;
 		}
-		debugger
 		// Determine rectangle on screen
 		// const hoverBoundingRect = findDOMNode(component).getBoundingClientRect()
 		// Get vertical middle
@@ -331,10 +339,15 @@ export default class PriviewItem extends Component{
       connectDragSource &&
       connectDropTarget &&
         connectDropTarget(
-						<div style={{...backStyle,...borderStyle}} className="priviewItem">
+						<div style={{...backStyle,...borderStyle}}>
 							{
-								design&&connectDragSource(
-									<div className="move-container">
+								design&&(type!='row'&&store.simple)&&connectDragSource(
+									<div style={{
+										float: `left`,
+										lineHeight: `35px`,
+										fontSize: `25px`,
+										color:`#999`,
+									}}>
 										<Icon
 											style={{cursor:`move`}}
 											type="drag"
@@ -342,7 +355,7 @@ export default class PriviewItem extends Component{
 									</div>
 								)
 							}
-							<div className="element-container" style={elementContainerStyle}>
+							<ElementContainer  style={elementContainerStyle}>
 								<style>
 									{
 										`
@@ -363,13 +376,17 @@ export default class PriviewItem extends Component{
 								</style>
 								{do{
 									if(type=='row'){
-										<DropableRow
-											form={form}
-											design={design}
-											childrenGroup={children}
-											store={store}
-											item={item}
-										/>
+										if(store.simple){
+											<span/>
+										}else{
+											<DropableRow
+												form={form}
+												design={design}
+												childrenGroup={children}
+												store={store}
+												item={item}
+											/>
+										}
 									}else{
 										<FormItem
 											{...formItemLayout}
@@ -397,20 +414,24 @@ export default class PriviewItem extends Component{
 										</FormItem>
 									}
 								}}
-	            </div>
+	            </ElementContainer>
 							{do{
 								if(design){
-									<div className="operation-container" style={{width:iconContainerWidth}}>
-										<CursorIcon
-											type="edit"
-											onClick={this.edit}
-										/>
-										<Divider type="vertical"/>
-										<CursorIcon
-											type="delete"
-											onClick={this.delete}
-										/>
-									</div>
+									if(type=='row'&&store.simple){
+										<span/>
+									}else{
+										<OperationContainer style={{width:iconContainerWidth}}>
+											<CursorIcon
+												type="edit"
+												onClick={this.edit}
+											/>
+											<Divider type="vertical"/>
+											<CursorIcon
+												type="delete"
+												onClick={this.delete}
+											/>
+										</OperationContainer>
+									}
 								}
 							}}
 							<div style={{clear:`both`}}></div>

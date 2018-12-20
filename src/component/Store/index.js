@@ -5,7 +5,7 @@ export default class Store {
   form;
   index=0;
 
-
+  @observable simple=false;
   @observable editorState=EditorState.createEmpty();
   @observable submitUrl = ''; //测试提交|提交地址
   @observable data = []; //元素
@@ -212,10 +212,11 @@ export default class Store {
     this.data[i][field].splice(index,1)
   }
 
-  @action init({design,data:{data=[],submitUrl,index=0},developer}){
+  @action init({design,simple=false,data:{data=[],submitUrl,index=0},developer}){
     this.design=design;
     this.developer=developer;
     this.data=data;
+    this.simple=simple;
     this.submitUrl=submitUrl;
     this.index=Number(index);
   }

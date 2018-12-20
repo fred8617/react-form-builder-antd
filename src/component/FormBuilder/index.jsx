@@ -26,7 +26,7 @@ const PrivicwContainer=styled.div`
   padding: 10px;
   min-height: 200px;
   float:left;
-  width:calc( 100% - 316px);
+  width:${props=>props.simple?`calc( 100% - 158px)`:`calc( 100% - 316px)`};
   ${'' /* @media screen and (max-width: 1900px) {
     width: 600px;
   }
@@ -70,6 +70,7 @@ export default class FormBuilder extends Component{
       priviewStyle,
       style,
       formLayout,
+      onSave,
       elementStyle,
     }=this.props;
     return (
@@ -90,12 +91,14 @@ export default class FormBuilder extends Component{
             style={style}
           >
             <PrivicwContainer
+              simple={store.simple}
               style={{width:!design?`100%`:null,...priviewStyle}}
             >
               {do{
                 if(design){
                   <Affix style={{ position: 'relative', top: -11}}  >
                     <DeveloperContent
+                      onSave={onSave}
                       form={this.props.form}
                     />
                   </Affix>
@@ -118,13 +121,17 @@ export default class FormBuilder extends Component{
                       />
                     </Affix>
                   </ElementListContainer>
-                  <ElementListContainer
-                    style={elementStyle}
-                  >
-                    <Affix>
-                      <ContainerList/>
-                    </Affix>
-                  </ElementListContainer>
+                  {do{
+                    if(!store.simple){
+                      <ElementListContainer
+                        style={elementStyle}
+                      >
+                        <Affix>
+                          <ContainerList/>
+                        </Affix>
+                      </ElementListContainer>
+                    }
+                  }}
                 </Fragment>
               }
             }}

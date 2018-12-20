@@ -5,19 +5,31 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("antd/es/button/style");
+
+var _button = _interopRequireDefault(require("antd/es/button"));
+
+require("antd/es/col/style");
+
+var _col = _interopRequireDefault(require("antd/es/col"));
+
+require("antd/es/input/style");
+
+var _input = _interopRequireDefault(require("antd/es/input"));
+
 var _react = _interopRequireWildcard(require("react"));
-
-var _Context = require("../../../Context");
-
-var _reactDnd = require("react-dnd");
 
 var _mobxReact = require("mobx-react");
 
 var _mobx = require("mobx");
 
-var _dec, _dec2, _class;
+var _styled = require("../../../styled");
+
+var _dec, _class;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -37,52 +49,67 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var type = "ELEMENT"; //拖拽目标处理集合
-
-var source = {
-  canDrag: function canDrag(props) {
-    return true;
-  },
-  beginDrag: function beginDrag(props, monitor, component) {
-    return props;
-  }
-};
-var Element = (_dec = (0, _mobxReact.inject)('store'), _dec2 = (0, _reactDnd.DragSource)(type, source, function (connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-    connectDragPreview: connect.dragPreview()
-  };
-}), _dec(_class = (0, _mobxReact.observer)(_class = (0, _Context.FormConsume)(_class = _dec2(_class =
+var DataOptions = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Element, _Component);
+  _inherits(DataOptions, _Component);
 
-  function Element() {
-    _classCallCheck(this, Element);
+  function DataOptions() {
+    _classCallCheck(this, DataOptions);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Element).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(DataOptions).apply(this, arguments));
   }
 
-  _createClass(Element, [{
+  _createClass(DataOptions, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          connectDragSource = _this$props.connectDragSource,
-          item = _this$props.item,
-          name = _this$props.item.name,
-          addElement = _this$props.store.addElement;
-      return connectDragSource && connectDragSource(_react.default.createElement("div", {
-        onClick: function onClick(e) {
-          return addElement(item);
-        },
-        style: {
-          cursor: "pointer"
-        }
-      }, name));
+      var _this$props$store = this.props.store,
+          data = _this$props$store.editingData,
+          options = _this$props$store.editingData.options,
+          setGroupData = _this$props$store.setGroupData,
+          addGroupData = _this$props$store.addGroupData,
+          deleteGroupData = _this$props$store.deleteGroupData;
+      return _react.default.createElement(_react.Fragment, null, options.map(function (e, i) {
+        return _react.default.createElement(_styled.RowMB10, {
+          gutter: 15
+        }, _react.default.createElement(_col.default, {
+          span: 10
+        }, _react.default.createElement(_input.default, {
+          onChange: function onChange(e) {
+            return setGroupData(data, "options", i, "label", e.target.value);
+          },
+          value: e.label,
+          placeHolder: "label"
+        })), _react.default.createElement(_col.default, {
+          span: 10
+        }, _react.default.createElement(_input.default, {
+          onChange: function onChange(e) {
+            return setGroupData(data, "options", i, "value", e.target.value);
+          },
+          value: e.value,
+          placeHolder: "value"
+        })), _react.default.createElement(_col.default, {
+          span: 2
+        }, _react.default.createElement(_button.default, {
+          icon: "plus",
+          onClick: function onClick(e) {
+            return addGroupData(data, "options", i, {
+              label: "default",
+              value: "default"
+            });
+          }
+        })), _react.default.createElement(_col.default, {
+          span: 2
+        }, options && options.length > 1 ? _react.default.createElement(_button.default, {
+          icon: "minus",
+          onClick: function onClick(e) {
+            return deleteGroupData(data, "options", i);
+          }
+        }) : void 0));
+      }));
     }
   }]);
 
-  return Element;
-}(_react.Component)) || _class) || _class) || _class) || _class);
-exports.default = Element;
+  return DataOptions;
+}(_react.Component)) || _class) || _class);
+exports.default = DataOptions;

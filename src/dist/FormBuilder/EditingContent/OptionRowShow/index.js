@@ -5,19 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("antd/es/slider/style");
+
+var _slider = _interopRequireDefault(require("antd/es/slider"));
+
 var _react = _interopRequireWildcard(require("react"));
-
-var _Context = require("../../../Context");
-
-var _reactDnd = require("react-dnd");
 
 var _mobxReact = require("mobx-react");
 
 var _mobx = require("mobx");
 
-var _dec, _dec2, _class;
+var _dec, _class;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -29,60 +31,57 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var type = "ELEMENT"; //拖拽目标处理集合
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-var source = {
-  canDrag: function canDrag(props) {
-    return true;
-  },
-  beginDrag: function beginDrag(props, monitor, component) {
-    return props;
-  }
-};
-var Element = (_dec = (0, _mobxReact.inject)('store'), _dec2 = (0, _reactDnd.DragSource)(type, source, function (connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-    connectDragPreview: connect.dragPreview()
-  };
-}), _dec(_class = (0, _mobxReact.observer)(_class = (0, _Context.FormConsume)(_class = _dec2(_class =
+var OptionRowShow = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Element, _Component);
+  _inherits(OptionRowShow, _Component);
 
-  function Element() {
-    _classCallCheck(this, Element);
+  function OptionRowShow() {
+    var _getPrototypeOf2;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Element).apply(this, arguments));
+    var _this;
+
+    _classCallCheck(this, OptionRowShow);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(OptionRowShow)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _this.optionRowShowChange = function (e) {
+      var _assertThisInitialize = _assertThisInitialized(_assertThisInitialized(_this)),
+          _assertThisInitialize2 = _assertThisInitialize.props.store,
+          data = _assertThisInitialize2.editingData,
+          setEditingData = _assertThisInitialize2.setEditingData;
+
+      setEditingData("optionRowShow", e);
+    };
+
+    return _this;
   }
 
-  _createClass(Element, [{
+  _createClass(OptionRowShow, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          connectDragSource = _this$props.connectDragSource,
-          item = _this$props.item,
-          name = _this$props.item.name,
-          addElement = _this$props.store.addElement;
-      return connectDragSource && connectDragSource(_react.default.createElement("div", {
-        onClick: function onClick(e) {
-          return addElement(item);
-        },
-        style: {
-          cursor: "pointer"
-        }
-      }, name));
+      var optionRowShow = this.props.store.editingData.optionRowShow;
+      return _react.default.createElement(_slider.default, {
+        min: 1,
+        max: 4,
+        onChange: this.optionRowShowChange,
+        value: Number(optionRowShow)
+      });
     }
   }]);
 
-  return Element;
-}(_react.Component)) || _class) || _class) || _class) || _class);
-exports.default = Element;
+  return OptionRowShow;
+}(_react.Component)) || _class) || _class);
+exports.default = OptionRowShow;

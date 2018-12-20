@@ -7,15 +7,19 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _Context = require("../../../Context");
+var _mobxReact = require("mobx-react");
+
+var _styled = require("../../../../styled");
 
 var _reactDnd = require("react-dnd");
 
-var _mobxReact = require("mobx-react");
+var _reactDom = require("react-dom");
 
-var _mobx = require("mobx");
+var _DragableCol = _interopRequireDefault(require("./DragableCol"));
 
 var _dec, _dec2, _class;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -37,52 +41,76 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var type = "ELEMENT"; //拖拽目标处理集合
+var type = "COL"; //放置目标处理集合
 
-var source = {
-  canDrag: function canDrag(props) {
+var target = {
+  canDrop: function canDrop(props) {
     return true;
   },
-  beginDrag: function beginDrag(props, monitor, component) {
-    return props;
+  hover: function hover(props, monitor, component) {
+    var dragItem = monitor.getItem().item;
+    var hoverItem = props.item,
+        _props$store = props.store,
+        createElement = _props$store.createElement,
+        moveElement = _props$store.moveElement,
+        setDownElement = _props$store.setDownElement,
+        addColIntoRow = _props$store.addColIntoRow,
+        data = _props$store.data; // console.log(`hover`);
+    // setDownElement(dragItem)
+
+    var dragIndex = data.indexOf(dragItem);
+    var hoverIndex = data.indexOf(hoverItem);
+  },
+  drop: function drop(props, monitor, component) {// const tp=monitor.getItemType();
+    //const dragData=monitor.getItem().data;
   }
 };
-var Element = (_dec = (0, _mobxReact.inject)('store'), _dec2 = (0, _reactDnd.DragSource)(type, source, function (connect, monitor) {
+var DropableRow = (_dec = (0, _reactDnd.DropTarget)(type, target, function (connect, monitor) {
   return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-    connectDragPreview: connect.dragPreview()
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
   };
-}), _dec(_class = (0, _mobxReact.observer)(_class = (0, _Context.FormConsume)(_class = _dec2(_class =
+}), _dec2 = (0, _mobxReact.inject)('store'), _dec(_class = _dec2(_class = (0, _mobxReact.observer)(_class =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Element, _Component);
+  _inherits(DropableRow, _Component);
 
-  function Element() {
-    _classCallCheck(this, Element);
+  function DropableRow() {
+    _classCallCheck(this, DropableRow);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Element).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(DropableRow).apply(this, arguments));
   }
 
-  _createClass(Element, [{
+  _createClass(DropableRow, [{
     key: "render",
     value: function render() {
       var _this$props = this.props,
-          connectDragSource = _this$props.connectDragSource,
+          connectDropTarget = _this$props.connectDropTarget,
+          isOver = _this$props.isOver,
+          childrenGroup = _this$props.childrenGroup,
+          store = _this$props.store,
           item = _this$props.item,
-          name = _this$props.item.name,
-          addElement = _this$props.store.addElement;
-      return connectDragSource && connectDragSource(_react.default.createElement("div", {
-        onClick: function onClick(e) {
-          return addElement(item);
-        },
+          design = _this$props.design,
+          form = _this$props.form;
+      return connectDropTarget(_react.default.createElement("div", null, _react.default.createElement(_styled.HoverRow, null, childrenGroup.length == 0 && design ? _react.default.createElement(_styled.NoneElement, {
         style: {
-          cursor: "pointer"
+          lineHeight: "31px",
+          height: 39,
+          marginBottom: 24
         }
-      }, name));
+      }, "\u884C\u5BB9\u5668\uFF0C\u8BF7\u52A0\u5165\u5217") : childrenGroup.map(function (e, i) {
+        return _react.default.createElement(_DragableCol.default, {
+          form: form,
+          design: design,
+          parent: item,
+          key: "DragableCol".concat(i),
+          store: store,
+          item: e
+        });
+      }))));
     }
   }]);
 
-  return Element;
-}(_react.Component)) || _class) || _class) || _class) || _class);
-exports.default = Element;
+  return DropableRow;
+}(_react.Component)) || _class) || _class) || _class);
+exports.default = DropableRow;

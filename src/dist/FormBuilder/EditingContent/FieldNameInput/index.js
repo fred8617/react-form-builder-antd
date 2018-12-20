@@ -5,31 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("antd/es/input/style");
+
+var _input = _interopRequireDefault(require("antd/es/input"));
+
 var _react = _interopRequireWildcard(require("react"));
-
-var _reactDraftWysiwyg = require("react-draft-wysiwyg");
-
-require("react-draft-wysiwyg/dist/react-draft-wysiwyg.css");
-
-var _draftJs = require("draft-js");
-
-var _draftjsToHtml = _interopRequireDefault(require("draftjs-to-html"));
-
-var _htmlToDraftjs = _interopRequireDefault(require("html-to-draftjs"));
-
-var _immutabilityHelper = _interopRequireDefault(require("immutability-helper"));
-
-var _Context = require("../../../Context");
 
 var _mobxReact = require("mobx-react");
 
 var _mobx = require("mobx");
 
-var _dec, _class, _class2, _descriptor;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _dec, _class, _class2, _descriptor, _descriptor2;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -55,70 +45,74 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
 
-var LabelEditor = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = (_class2 =
+var FieldNameInput = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = (_class2 =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(LabelEditor, _Component);
+  _inherits(FieldNameInput, _Component);
 
-  function LabelEditor() {
+  function FieldNameInput() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, LabelEditor);
+    _classCallCheck(this, FieldNameInput);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(LabelEditor)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    _this.state = {
-      toolbar: ['inline', 'blockType', 'fontSize', 'fontFamily', //'list',
-      //'textAlign',
-      'colorPicker', 'link', //'embedded',
-      'emoji', 'image', 'remove', 'history']
-    };
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FieldNameInput)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    _initializerDefineProperty(_this, "onEditorStateChange", _descriptor, _assertThisInitialized(_assertThisInitialized(_this)));
+    _initializerDefineProperty(_this, "handleChange", _descriptor, _assertThisInitialized(_assertThisInitialized(_this)));
+
+    _initializerDefineProperty(_this, "handleBlur", _descriptor2, _assertThisInitialized(_assertThisInitialized(_this)));
 
     return _this;
   }
 
-  _createClass(LabelEditor, [{
+  _createClass(FieldNameInput, [{
     key: "render",
     value: function render() {
-      var toolbar = this.state.toolbar,
-          editorState = this.props.store.editorState;
-      return _react.default.createElement(_reactDraftWysiwyg.Editor, {
-        toolbar: {
-          options: toolbar
-        },
-        editorState: editorState,
-        wrapperClassName: "editor",
-        editorClassName: "editor-main",
-        onEditorStateChange: this.onEditorStateChange
+      var fieldName = this.props.store.editingData.fieldName;
+      return _react.default.createElement(_input.default, {
+        value: fieldName,
+        onChange: this.handleChange,
+        onBlur: this.handleBlur,
+        placeholder: "\u8F93\u5165\u4F20\u5165\u540E\u53F0\u5B57\u6BB5\u540D\u79F0",
+        style: {
+          width: 200
+        }
       });
     }
   }]);
 
-  return LabelEditor;
-}(_react.Component), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "onEditorStateChange", [_mobx.action], {
+  return FieldNameInput;
+}(_react.Component), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "handleChange", [_mobx.action], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
     var _this2 = this;
 
-    return function (editorState) {
-      var _this2$props = _this2.props,
-          store = _this2$props.store,
-          _this2$props$store = _this2$props.store,
-          data = _this2$props$store.editingData,
-          setEditingData = _this2$props$store.setEditingData;
-      var label = (0, _draftjsToHtml.default)((0, _draftJs.convertToRaw)(editorState.getCurrentContent()));
-      setEditingData("label", label);
-      store.editorState = editorState;
+    return function (e) {
+      var store = _this2.props.store;
+      store.editingData.fieldName = e.target.value;
+    };
+  }
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "handleBlur", [_mobx.action], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this3 = this;
+
+    return function () {
+      var _this3$props$store = _this3.props.store,
+          editingData = _this3$props$store.editingData,
+          fieldName = _this3$props$store.editingData.fieldName,
+          checkName = _this3$props$store.checkName;
+      editingData.fieldName = checkName(fieldName, editingData.type, 1);
     };
   }
 })), _class2)) || _class) || _class);
-exports.default = LabelEditor;
+exports.default = FieldNameInput;

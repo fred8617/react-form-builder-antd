@@ -5,33 +5,29 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("antd/es/input/style");
+
+var _input = _interopRequireDefault(require("antd/es/input"));
+
+require("antd/es/checkbox/style");
+
+var _checkbox = _interopRequireDefault(require("antd/es/checkbox"));
+
 var _react = _interopRequireWildcard(require("react"));
-
-var _reactDraftWysiwyg = require("react-draft-wysiwyg");
-
-require("react-draft-wysiwyg/dist/react-draft-wysiwyg.css");
-
-var _draftJs = require("draft-js");
-
-var _draftjsToHtml = _interopRequireDefault(require("draftjs-to-html"));
-
-var _htmlToDraftjs = _interopRequireDefault(require("html-to-draftjs"));
-
-var _immutabilityHelper = _interopRequireDefault(require("immutability-helper"));
-
-var _Context = require("../../../Context");
 
 var _mobxReact = require("mobx-react");
 
 var _mobx = require("mobx");
 
-var _dec, _class, _class2, _descriptor;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _dec, _class, _class2, _descriptor, _descriptor2;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -55,70 +51,88 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 
 function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
 
-var LabelEditor = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = (_class2 =
+var RequiredCheckBox = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class = (_class2 =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(LabelEditor, _Component);
+  _inherits(RequiredCheckBox, _Component);
 
-  function LabelEditor() {
+  function RequiredCheckBox() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, LabelEditor);
+    _classCallCheck(this, RequiredCheckBox);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(LabelEditor)).call.apply(_getPrototypeOf2, [this].concat(args)));
-    _this.state = {
-      toolbar: ['inline', 'blockType', 'fontSize', 'fontFamily', //'list',
-      //'textAlign',
-      'colorPicker', 'link', //'embedded',
-      'emoji', 'image', 'remove', 'history']
-    };
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(RequiredCheckBox)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
-    _initializerDefineProperty(_this, "onEditorStateChange", _descriptor, _assertThisInitialized(_assertThisInitialized(_this)));
+    _initializerDefineProperty(_this, "requireChange", _descriptor, _assertThisInitialized(_assertThisInitialized(_this)));
+
+    _initializerDefineProperty(_this, "requiredMessageChange", _descriptor2, _assertThisInitialized(_assertThisInitialized(_this)));
 
     return _this;
   }
 
-  _createClass(LabelEditor, [{
+  _createClass(RequiredCheckBox, [{
     key: "render",
     value: function render() {
-      var toolbar = this.state.toolbar,
-          editorState = this.props.store.editorState;
-      return _react.default.createElement(_reactDraftWysiwyg.Editor, {
-        toolbar: {
-          options: toolbar
-        },
-        editorState: editorState,
-        wrapperClassName: "editor",
-        editorClassName: "editor-main",
-        onEditorStateChange: this.onEditorStateChange
-      });
+      var _this$props$store$edi = this.props.store.editingData,
+          required = _this$props$store$edi.required,
+          requiredMessage = _this$props$store$edi.requiredMessage;
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_checkbox.default, {
+        checked: required,
+        onChange: this.requireChange
+      }, "\u5FC5\u586B"), required ? _react.default.createElement(_input.default, {
+        value: requiredMessage,
+        onChange: this.requiredMessageChange,
+        placeholder: "\u8F93\u5165\u6821\u9A8C\u5FC5\u586B\u7684\u6807\u8BED",
+        style: {
+          width: 200
+        }
+      }) : void 0);
     }
   }]);
 
-  return LabelEditor;
-}(_react.Component), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "onEditorStateChange", [_mobx.action], {
+  return RequiredCheckBox;
+}(_react.Component), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "requireChange", [_mobx.action], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
     var _this2 = this;
 
-    return function (editorState) {
-      var _this2$props = _this2.props,
-          store = _this2$props.store,
-          _this2$props$store = _this2$props.store,
-          data = _this2$props$store.editingData,
-          setEditingData = _this2$props$store.setEditingData;
-      var label = (0, _draftjsToHtml.default)((0, _draftJs.convertToRaw)(editorState.getCurrentContent()));
-      setEditingData("label", label);
-      store.editorState = editorState;
+    return function (e) {
+      var store = _this2.props.store;
+      store.editingData.required = e.target.checked;
+    };
+  }
+}), _descriptor2 = _applyDecoratedDescriptor(_class2.prototype, "requiredMessageChange", [_mobx.action], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this3 = this;
+
+    return function (e) {
+      var _this3$props = _this3.props,
+          store = _this3$props.store,
+          data = _this3$props.store.editingData,
+          form = _this3$props.form;
+      store.editingData.requiredMessage = e.target.value; // debugger
+
+      var fName = data.fieldName || "invalidField";
+
+      if (!form.getFieldValue(fName)) {
+        form.setFieldsValue(_defineProperty({}, fName, 1));
+        form.setFieldsValue(_defineProperty({}, fName, ""));
+        setTimeout(function () {
+          form.validateFields();
+        }, 1);
+      }
     };
   }
 })), _class2)) || _class) || _class);
-exports.default = LabelEditor;
+exports.default = RequiredCheckBox;

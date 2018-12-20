@@ -5,19 +5,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+require("antd/es/list/style");
+
+var _list = _interopRequireDefault(require("antd/es/list"));
+
 var _react = _interopRequireWildcard(require("react"));
-
-var _Context = require("../../../Context");
-
-var _reactDnd = require("react-dnd");
 
 var _mobxReact = require("mobx-react");
 
-var _mobx = require("mobx");
+var _Element = _interopRequireDefault(require("./Element"));
 
-var _dec, _dec2, _class;
+var _dec, _class;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -37,52 +39,34 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var type = "ELEMENT"; //拖拽目标处理集合
-
-var source = {
-  canDrag: function canDrag(props) {
-    return true;
-  },
-  beginDrag: function beginDrag(props, monitor, component) {
-    return props;
-  }
-};
-var Element = (_dec = (0, _mobxReact.inject)('store'), _dec2 = (0, _reactDnd.DragSource)(type, source, function (connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-    connectDragPreview: connect.dragPreview()
-  };
-}), _dec(_class = (0, _mobxReact.observer)(_class = (0, _Context.FormConsume)(_class = _dec2(_class =
+var ContainerList = (_dec = (0, _mobxReact.inject)('store'), _dec(_class = (0, _mobxReact.observer)(_class =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Element, _Component);
+  _inherits(ContainerList, _Component);
 
-  function Element() {
-    _classCallCheck(this, Element);
+  function ContainerList() {
+    _classCallCheck(this, ContainerList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Element).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(ContainerList).apply(this, arguments));
   }
 
-  _createClass(Element, [{
+  _createClass(ContainerList, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          connectDragSource = _this$props.connectDragSource,
-          item = _this$props.item,
-          name = _this$props.item.name,
-          addElement = _this$props.store.addElement;
-      return connectDragSource && connectDragSource(_react.default.createElement("div", {
-        onClick: function onClick(e) {
-          return addElement(item);
-        },
-        style: {
-          cursor: "pointer"
+      var data = this.props.store.containerTypes;
+      return _react.default.createElement(_list.default, {
+        header: _react.default.createElement("div", null, "\u5E03\u5C40"),
+        bordered: true,
+        dataSource: data,
+        renderItem: function renderItem(item) {
+          return _react.default.createElement(_list.default.Item, null, _react.default.createElement(_Element.default, {
+            item: item
+          }));
         }
-      }, name));
+      });
     }
   }]);
 
-  return Element;
-}(_react.Component)) || _class) || _class) || _class) || _class);
-exports.default = Element;
+  return ContainerList;
+}(_react.Component)) || _class) || _class);
+exports.default = ContainerList;
