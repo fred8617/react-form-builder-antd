@@ -1,6 +1,6 @@
 {
   "name": "react-form-builder-antd",
-  "version": "0.0.7-bate",
+  "version": "0.0.10-bate",
   "repository": {
     "type": "git",
     "url": "https://github.com/Fled8617/react-form-builder-antd"
@@ -12,6 +12,7 @@
     "start-self": "node scripts/start-self.js",
     "start-self-init": "node scripts/start-self-init.js",
     "build": "node scripts/build.js",
+    "build-c":"babel src/component -d src/dist",
     "build-controll": "node autoCreate/autoCreate.js",
     "test": "node scripts/test.js"
   },

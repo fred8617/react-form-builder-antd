@@ -1,2 +1,5 @@
-import FormBuilder from './FormBuilder';
-export default FormBuilder;
+import FormBuilder,{FormBuilderNoBackend} from './FormBuilder';
+export {
+  FormBuilder as default,
+  FormBuilderNoBackend
+};

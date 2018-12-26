@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.FormBuilderNoBackend = exports.default = void 0;
 
 require("antd/es/affix/style");
 
@@ -37,13 +37,17 @@ var _EditingContent = _interopRequireDefault(require("./EditingContent"));
 
 var _DeveloperContent = _interopRequireDefault(require("./DeveloperContent"));
 
-var _dec, _dec2, _class;
+var _dec, _class;
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -94,36 +98,34 @@ var ContainerListContainer = _styledComponents.default.div.withConfig({
 /* margin-left: 5px; */
 );
 
-var FormBuilder = (_dec = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend.default, {
-  window: window
-}), _dec2 = _form.default.create({
+var FormBuilderVersion = (_dec = _form.default.create({
   onValuesChange: function onValuesChange(props, fields) {
     store.editField = Object.keys(fields)[0];
   }
-}), _dec(_class = _dec2(_class =
+}), _dec(_class =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(FormBuilder, _Component);
+  _inherits(FormBuilderVersion, _Component);
 
-  function FormBuilder() {
+  function FormBuilderVersion() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, FormBuilder);
+    _classCallCheck(this, FormBuilderVersion);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormBuilder)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormBuilderVersion)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.state = {
       isInit: false
     };
     return _this;
   }
 
-  _createClass(FormBuilder, [{
+  _createClass(FormBuilderVersion, [{
     key: "render",
     value: function render() {
       var _this$props = this.props,
@@ -164,9 +166,15 @@ function (_Component) {
     }
   }], [{
     key: "getDerivedStateFromProps",
-    value: function getDerivedStateFromProps(props, state) {
+    value: function getDerivedStateFromProps(_ref, state) {
+      var _ref$data = _ref.data,
+          data = _ref$data === void 0 ? {} : _ref$data,
+          restProps = _objectWithoutProperties(_ref, ["data"]);
+
       if (!state.isInit) {
-        store.init(_objectSpread({}, props));
+        store.init(_objectSpread({
+          data: data
+        }, restProps));
       }
 
       console.log("getDerivedStateFromProps");
@@ -176,6 +184,11 @@ function (_Component) {
     }
   }]);
 
-  return FormBuilder;
-}(_react.Component)) || _class) || _class);
+  return FormBuilderVersion;
+}(_react.Component)) || _class);
+var FormBuilder = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend.default, {
+  window: window
+})(FormBuilderVersion);
 exports.default = FormBuilder;
+var FormBuilderNoBackend = FormBuilderVersion;
+exports.FormBuilderNoBackend = FormBuilderNoBackend;

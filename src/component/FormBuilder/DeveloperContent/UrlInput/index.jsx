@@ -16,8 +16,16 @@ export default class UrlInput extends Component{
     const {
       form,
     }=this.props;
-    Modal.info({title:'测试表单提交',content:<pre>{JSON.stringify(form.getFieldsValue(),null,2)}</pre>});
-    console.log(form.getFieldsValue());
+    form.validateFields()
+    // form.validateFieldsAndScroll((err,values)=>{
+    //   console.log(err,values);
+    //   form.setFields(err)
+    //   if(err){
+    //     return;
+    //   }
+    //   Modal.info({title:'测试表单提交',content:<pre>{JSON.stringify(form.getFieldsValue(),null,2)}</pre>});
+    // });
+
   }
   @action urlChange=(e)=>{
     this.props.store.submitUrl=e.target.value;

@@ -43,20 +43,32 @@ const ContainerListContainer=styled.div`
   ${'' /* margin-left: 5px; */}
 `;
 
-@DragDropContext(HTML5Backend,{window })
+
 @Form.create({
   onValuesChange:(props, fields)=>{
     store.editField=Object.keys(fields)[0];
   }
 })
-export default class FormBuilder extends Component{
+@observer
+class FormBuilderVersion extends Component{
   state={
     isInit:false
   }
-  static getDerivedStateFromProps(props,state){
+  // componentDidMount(){
+  //   const {
+  //     data={},...restProps
+  //   }=this.props;
+  //   store.init({
+  //     data,
+  //     ...restProps
+  //   });
+  // }
+  static getDerivedStateFromProps({data={},...restProps},state){
+    // console.log(restProps.form.validateFields());
     if(!state.isInit){
       store.init({
-        ...props
+        data,
+        ...restProps
       });
     }
     console.log(`getDerivedStateFromProps`);
@@ -73,6 +85,7 @@ export default class FormBuilder extends Component{
       onSave,
       elementStyle,
     }=this.props;
+    // store?.editingData?.required
     return (
       <Provider
         store={store}
@@ -136,6 +149,7 @@ export default class FormBuilder extends Component{
               }
             }}
           </div>
+          <div style={{clear:`both`}}/>
           {do{
             if(design){
               <EditingContent
@@ -147,4 +161,10 @@ export default class FormBuilder extends Component{
       </Provider>
     )
   }
+}
+const FormBuilder=DragDropContext(HTML5Backend,{window })(FormBuilderVersion);
+const FormBuilderNoBackend=FormBuilderVersion;
+export {
+  FormBuilder as default,
+  FormBuilderNoBackend
 }

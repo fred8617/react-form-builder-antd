@@ -198,6 +198,7 @@ export default class PriviewItem extends Component{
 			||(this.props.isDragging!==nextProps.isDragging)
 			||(JSON.stringify(this.props.options)!=JSON.stringify(nextProps.options))
 			||(JSON.stringify(this.props.children)!=JSON.stringify(nextProps.children))
+			||nextProps.form.getFieldError(nextProps.item.fieldName)
 			// ||(this.props.item.fieldName!==nextProps.item.fieldName)
 		)
 	}
