@@ -324,8 +324,8 @@ function (_Component) {
   _createClass(PriviewItem, [{
     key: "shouldComponentUpdate",
     value: function shouldComponentUpdate(nextProps) {
-      // console.log(this.props,nextProps);
-      return this.props.store.editField === nextProps.item.fieldName || this.props.item !== nextProps.item || this.props.isDragging !== nextProps.isDragging || this.props.isOver !== nextProps.isOver || this.props.clientOffset !== nextProps.clientOffset || this.props.sourceClientOffset !== nextProps.sourceClientOffset || this.props.initialClientOffset !== nextProps.initialClientOffset || this.props.design !== nextProps.design || this.props.required !== nextProps.required || this.props.label !== nextProps.label || this.props.fieldName !== nextProps.fieldName || this.props.optionRowShow !== nextProps.optionRowShow || this.props.isDragging !== nextProps.isDragging || JSON.stringify(this.props.options) != JSON.stringify(nextProps.options) || JSON.stringify(this.props.children) != JSON.stringify(nextProps.children) // ||(this.props.item.fieldName!==nextProps.item.fieldName)
+      // console.log(nextProps.form.getFieldError(nextProps.item.fieldName));
+      return this.props.store.editField === nextProps.item.fieldName || this.props.item !== nextProps.item || this.props.isDragging !== nextProps.isDragging || this.props.isOver !== nextProps.isOver || this.props.clientOffset !== nextProps.clientOffset || this.props.sourceClientOffset !== nextProps.sourceClientOffset || this.props.initialClientOffset !== nextProps.initialClientOffset || this.props.design !== nextProps.design || this.props.required !== nextProps.required || this.props.label !== nextProps.label || this.props.fieldName !== nextProps.fieldName || this.props.optionRowShow !== nextProps.optionRowShow || this.props.isDragging !== nextProps.isDragging || JSON.stringify(this.props.options) != JSON.stringify(nextProps.options) || JSON.stringify(this.props.children) != JSON.stringify(nextProps.children) || nextProps.form.getFieldError(nextProps.item.fieldName) // ||(this.props.item.fieldName!==nextProps.item.fieldName)
       ;
     }
   }, {

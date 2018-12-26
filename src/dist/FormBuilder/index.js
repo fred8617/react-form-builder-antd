@@ -102,7 +102,7 @@ var FormBuilderVersion = (_dec = _form.default.create({
   onValuesChange: function onValuesChange(props, fields) {
     store.editField = Object.keys(fields)[0];
   }
-}), _dec(_class =
+}), _dec(_class = (0, _mobxReact.observer)(_class =
 /*#__PURE__*/
 function (_Component) {
   _inherits(FormBuilderVersion, _Component);
@@ -120,7 +120,16 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormBuilderVersion)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.state = {
-      isInit: false
+      isInit: false // componentDidMount(){
+      //   const {
+      //     data={},...restProps
+      //   }=this.props;
+      //   store.init({
+      //     data,
+      //     ...restProps
+      //   });
+      // }
+
     };
     return _this;
   }
@@ -134,7 +143,8 @@ function (_Component) {
           style = _this$props.style,
           formLayout = _this$props.formLayout,
           onSave = _this$props.onSave,
-          elementStyle = _this$props.elementStyle;
+          elementStyle = _this$props.elementStyle; // store?.editingData?.required
+
       return _react.default.createElement(_mobxReact.Provider, {
         store: store
       }, _react.default.createElement(_react.Fragment, null, _react.default.createElement("style", null, "\n          p,ol{\n            margin:0\n          }\n          "), _react.default.createElement("div", {
@@ -160,7 +170,11 @@ function (_Component) {
         style: elementStyle
       }, _react.default.createElement(_affix.default, null, _react.default.createElement(_ElementList.default, null))), !store.simple ? _react.default.createElement(ElementListContainer, {
         style: elementStyle
-      }, _react.default.createElement(_affix.default, null, _react.default.createElement(_ContainerList.default, null))) : void 0) : void 0), design ? _react.default.createElement(_EditingContent.default, {
+      }, _react.default.createElement(_affix.default, null, _react.default.createElement(_ContainerList.default, null))) : void 0) : void 0), _react.default.createElement("div", {
+        style: {
+          clear: "both"
+        }
+      }), design ? _react.default.createElement(_EditingContent.default, {
         form: this.props.form
       }) : void 0));
     }
@@ -171,6 +185,7 @@ function (_Component) {
           data = _ref$data === void 0 ? {} : _ref$data,
           restProps = _objectWithoutProperties(_ref, ["data"]);
 
+      // console.log(restProps.form.validateFields());
       if (!state.isInit) {
         store.init(_objectSpread({
           data: data
@@ -185,7 +200,7 @@ function (_Component) {
   }]);
 
   return FormBuilderVersion;
-}(_react.Component)) || _class);
+}(_react.Component)) || _class) || _class);
 var FormBuilder = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend.default, {
   window: window
 })(FormBuilderVersion);

@@ -181,7 +181,7 @@ const Option = Select.Option;
 )
 export default class PriviewItem extends Component{
 	shouldComponentUpdate(nextProps){
-		// console.log(this.props,nextProps);
+		// console.log(nextProps.form.getFieldError(nextProps.item.fieldName));
 		return (
 			(this.props.store.editField===nextProps.item.fieldName)
 			||(this.props.item!==nextProps.item)

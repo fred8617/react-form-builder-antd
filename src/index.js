@@ -54,7 +54,7 @@ const data={
       "demo": false,
       "fieldName": "inputNumber4",
       "label": "inputNumber4",
-      "required": false,
+      "required": true,
       "requiredMessage": ""
     },
     {
@@ -153,8 +153,11 @@ const ControllContainer=styled.div`
 
 @observer
 class App extends Component{
+  formRef=React.createRef()
   @observable design=true;
   @action handleChange=(e)=>{
+    console.log(this.formRef);
+    this.formRef.current.ref.current.validateFieldsAndScroll((err,value)=>{})
     const {value}=e.target;
     this.design=value;
   }
@@ -181,6 +184,7 @@ class App extends Component{
         </ControllContainer>
         <Container>
           <FormBuilder
+            ref={this.formRef}
             priviewStyle={{
               border:`1px solid #d3d3d3`,
               boxShadow: `-3px -1px 20px 2px #d3d3d3`,

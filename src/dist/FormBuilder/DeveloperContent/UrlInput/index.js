@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-require("antd/es/modal/style");
-
-var _modal = _interopRequireDefault(require("antd/es/modal"));
-
 require("antd/es/input/style");
 
 var _input = _interopRequireDefault(require("antd/es/input"));
@@ -70,13 +66,14 @@ function (_Component) {
 
     _this.testSubmit = function () {
       var form = _this.props.form;
-
-      _modal.default.info({
-        title: '测试表单提交',
-        content: _react.default.createElement("pre", null, JSON.stringify(form.getFieldsValue(), null, 2))
-      });
-
-      console.log(form.getFieldsValue());
+      form.validateFields(); // form.validateFieldsAndScroll((err,values)=>{
+      //   console.log(err,values);
+      //   form.setFields(err)
+      //   if(err){
+      //     return;
+      //   }
+      //   Modal.info({title:'测试表单提交',content:<pre>{JSON.stringify(form.getFieldsValue(),null,2)}</pre>});
+      // });
     };
 
     _initializerDefineProperty(_this, "urlChange", _descriptor, _assertThisInitialized(_assertThisInitialized(_this)));
