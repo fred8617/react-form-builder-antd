@@ -90,6 +90,7 @@ function (_Component) {
       var _this$props = this.props,
           connectDropTarget = _this$props.connectDropTarget,
           store = _this$props.store,
+          defaultValues = _this$props.defaultValues,
           _this$props$store = _this$props.store,
           _this$props$store$edi = _this$props$store.editingData,
           _this$props$store$edi2 = _this$props$store$edi.required,
@@ -109,6 +110,7 @@ function (_Component) {
       });
       return connectDropTarget && connectDropTarget(_react.default.createElement("div", null, _react.default.createElement(_form.default, null, length == 0 ? design && _react.default.createElement(_styled.NoneElement, null, "\u8BF7\u5728\u5143\u7D20\u680F\u6293\u53D6\u5143\u7D20\u6216\u76F4\u63A5\u70B9\u51FB\u5143\u7D20") : data.map(function (e, i) {
         return _react.default.createElement(_PriviewItem.default, {
+          defaultValues: defaultValues,
           parent: data,
           design: design,
           key: "PriviewItem".concat(i),

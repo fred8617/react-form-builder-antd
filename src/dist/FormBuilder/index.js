@@ -121,13 +121,11 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormBuilderVersion)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.state = {
       isInit: false // componentDidMount(){
-      //   const {
-      //     data={},...restProps
-      //   }=this.props;
-      //   store.init({
-      //     data,
-      //     ...restProps
-      //   });
+      //   console.log(`didmount`);
+      //   if(this.props.defaultValues){
+      //     debugger
+      //     this.props.form.setFieldsValue(this.props.defaultValues)
+      //   }
       // }
 
     };
@@ -143,6 +141,7 @@ function (_Component) {
           style = _this$props.style,
           formLayout = _this$props.formLayout,
           onSave = _this$props.onSave,
+          defaultValues = _this$props.defaultValues,
           elementStyle = _this$props.elementStyle; // store?.editingData?.required
 
       return _react.default.createElement(_mobxReact.Provider, {
@@ -163,6 +162,7 @@ function (_Component) {
         onSave: onSave,
         form: this.props.form
       })) : void 0, _react.default.createElement(_Priview.default, {
+        defaultValues: defaultValues,
         form: this.props.form,
         store: store,
         design: design

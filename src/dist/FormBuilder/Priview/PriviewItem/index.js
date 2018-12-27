@@ -343,6 +343,7 @@ function (_Component) {
           connectDragSource = _this$props.connectDragSource,
           isDragging = _this$props.isDragging,
           isOver = _this$props.isOver,
+          defaultValues = _this$props.defaultValues,
           form = _this$props.form,
           _this$props$form = _this$props.form,
           getFieldProps = _this$props$form.getFieldProps,
@@ -424,6 +425,7 @@ function (_Component) {
       }, _react.default.createElement(_col.default, {
         span: 24
       }, getFieldDecorator(item.fieldName || 'invalidField', {
+        initialValue: defaultValues === null || defaultValues === void 0 ? void 0 : defaultValues[item.fieldName],
         rules: [{
           required: item.required,
           message: item.requiredMessage
