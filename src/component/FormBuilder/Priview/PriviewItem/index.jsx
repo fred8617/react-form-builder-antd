@@ -294,6 +294,7 @@ export default class PriviewItem extends Component{
       connectDragSource,
 			isDragging,
 			isOver,
+			defaultValues,
 			form,
 			form:{
 				getFieldProps,
@@ -401,6 +402,7 @@ export default class PriviewItem extends Component{
 													<Col span={24}>
 														{
 															getFieldDecorator(item.fieldName||'invalidField',{
+																initialValue:defaultValues?.[item.fieldName],
 																	rules:[
 																{
 																	required:item.required,

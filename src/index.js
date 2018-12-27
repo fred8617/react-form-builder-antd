@@ -139,6 +139,9 @@ const data={
   "index": 10
 }
 
+const defaultValues={
+  'inputNumber4':20,
+}
 const Container=styled.div`
   ${'' /* position: absolute;//不建议这样使用，元素内部固钉会出问题
   left :50%;
@@ -184,6 +187,7 @@ class App extends Component{
         </ControllContainer>
         <Container>
           <FormBuilder
+            defaultValues={defaultValues}
             ref={this.formRef}
             priviewStyle={{
               border:`1px solid #d3d3d3`,

@@ -55,13 +55,11 @@ class FormBuilderVersion extends Component{
     isInit:false
   }
   // componentDidMount(){
-  //   const {
-  //     data={},...restProps
-  //   }=this.props;
-  //   store.init({
-  //     data,
-  //     ...restProps
-  //   });
+  //   console.log(`didmount`);
+  //   if(this.props.defaultValues){
+  //     debugger
+  //     this.props.form.setFieldsValue(this.props.defaultValues)
+  //   }
   // }
   static getDerivedStateFromProps({data={},...restProps},state){
     // console.log(restProps.form.validateFields());
@@ -83,6 +81,7 @@ class FormBuilderVersion extends Component{
       style,
       formLayout,
       onSave,
+      defaultValues,
       elementStyle,
     }=this.props;
     // store?.editingData?.required
@@ -118,6 +117,7 @@ class FormBuilderVersion extends Component{
                 }
               }}
               <Priview
+                defaultValues={defaultValues}
                 form={this.props.form}
                 store={store}
                 design={design}

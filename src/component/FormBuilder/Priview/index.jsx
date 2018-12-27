@@ -73,6 +73,7 @@ export default class Priview extends Component{
 		const {
 			connectDropTarget,
 			store,
+			defaultValues,
 			store:{//Dnd的原因，store必须通过props传入不能注入
 				editingData:{
 					required=false,
@@ -111,6 +112,7 @@ export default class Priview extends Component{
                 data.map((e,i)=>{
                   return (
                     <PriviewItem
+											defaultValues={defaultValues}
 											parent={data}
 											design={design}
 											key={`PriviewItem${i}`}
