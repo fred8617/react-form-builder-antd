@@ -54,13 +54,9 @@ class FormBuilderVersion extends Component{
   state={
     isInit:false
   }
-  // componentDidMount(){
-  //   console.log(`didmount`);
-  //   if(this.props.defaultValues){
-  //     debugger
-  //     this.props.form.setFieldsValue(this.props.defaultValues)
-  //   }
-  // }
+  componentDidMount(){
+    this.props.setStore?.(store)
+  }
   static getDerivedStateFromProps({data={},...restProps},state){
     // console.log(restProps.form.validateFields());
     if(!state.isInit){
@@ -83,6 +79,7 @@ class FormBuilderVersion extends Component{
       onSave,
       defaultValues,
       elementStyle,
+      developerContent=true,
     }=this.props;
     // store?.editingData?.required
     return (
@@ -107,7 +104,7 @@ class FormBuilderVersion extends Component{
               style={{width:!design?`100%`:null,...priviewStyle}}
             >
               {do{
-                if(design){
+                if(design&&developerContent){
                   <Affix style={{ position: 'relative', top: -11}}  >
                     <DeveloperContent
                       onSave={onSave}

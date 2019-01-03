@@ -120,29 +120,31 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormBuilderVersion)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.state = {
-      isInit: false // componentDidMount(){
-      //   console.log(`didmount`);
-      //   if(this.props.defaultValues){
-      //     debugger
-      //     this.props.form.setFieldsValue(this.props.defaultValues)
-      //   }
-      // }
-
+      isInit: false
     };
     return _this;
   }
 
   _createClass(FormBuilderVersion, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this$props$setStore, _this$props;
+
+      (_this$props$setStore = (_this$props = this.props).setStore) === null || _this$props$setStore === void 0 ? void 0 : _this$props$setStore.call(_this$props, store);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          design = _this$props.design,
-          priviewStyle = _this$props.priviewStyle,
-          style = _this$props.style,
-          formLayout = _this$props.formLayout,
-          onSave = _this$props.onSave,
-          defaultValues = _this$props.defaultValues,
-          elementStyle = _this$props.elementStyle; // store?.editingData?.required
+      var _this$props2 = this.props,
+          design = _this$props2.design,
+          priviewStyle = _this$props2.priviewStyle,
+          style = _this$props2.style,
+          formLayout = _this$props2.formLayout,
+          onSave = _this$props2.onSave,
+          defaultValues = _this$props2.defaultValues,
+          elementStyle = _this$props2.elementStyle,
+          _this$props2$develope = _this$props2.developerContent,
+          developerContent = _this$props2$develope === void 0 ? true : _this$props2$develope; // store?.editingData?.required
 
       return _react.default.createElement(_mobxReact.Provider, {
         store: store
@@ -153,7 +155,7 @@ function (_Component) {
         style: _objectSpread({
           width: !design ? "100%" : null
         }, priviewStyle)
-      }, design ? _react.default.createElement(_affix.default, {
+      }, design && developerContent ? _react.default.createElement(_affix.default, {
         style: {
           position: 'relative',
           top: -11

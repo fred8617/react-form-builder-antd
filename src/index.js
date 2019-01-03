@@ -156,10 +156,12 @@ const ControllContainer=styled.div`
 
 @observer
 class App extends Component{
-  formRef=React.createRef()
+  store;
+  formRef=React.createRef();
+  developerRef=React.createRef();
   @observable design=true;
   @action handleChange=(e)=>{
-    console.log(this.formRef);
+    console.log(this.store);
     this.formRef.current.ref.current.validateFieldsAndScroll((err,value)=>{})
     const {value}=e.target;
     this.design=value;
@@ -200,6 +202,8 @@ class App extends Component{
             onSave={this.onSave}
             simple={true}
             developer={true}
+            // developerContent={false}
+            setStore={(store)=>this.store=store}
             design={this.design}
             data={data}
           />
