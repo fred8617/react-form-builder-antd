@@ -5,4 +5,4 @@
 ### 启动项目
 > **npm start**
 ### DEMO
-[简单演示](https://fled8617.github.io/react-form-builder-antd)
+[简单演示](https://fred8617.github.io/react-form-builder-antd)
